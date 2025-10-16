@@ -50,10 +50,16 @@ app.post("/test1", async (c) => {
   try {
     const body = await c?.req?.parseBody();
     let q = body["q"];
+    let username = String(body["username"]);
+    let password = String(body["password"]);
+    /*
+    form-data body 로 username, password 받고(string)
+    newUser에 저장해 주세요
+     */
     const userRepo = AppDataSource.getRepository(TUser);
     let newUser = new TUser();
-    newUser.username = "테스트유저입니다";
-    newUser.password = "aaaa";
+    newUser.username = username;
+    newUser.password = password;
     newUser = await userRepo.save(newUser);
     result.data = newUser;
     return c.json(result);
