@@ -4,6 +4,8 @@ import { Hono } from "hono";
 import * as dotenv from "dotenv";
 import { AppDataSource } from "./data-source1.js";
 import { TUser } from "./entities/TUser.js";
+import user_router from "./router/user_router.js";
+import board_router from "./router/board_router.js";
 
 const envFile =
   process.env.NODE_ENV === "production"
@@ -67,6 +69,9 @@ app.post("/test1", async (c) => {
     return c.json(result);
   }
 });
+
+app.route("/api/user", user_router);
+app.route("/api/board", board_router);
 
 serve(
   {
