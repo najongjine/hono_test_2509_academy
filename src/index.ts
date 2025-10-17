@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 
 import * as dotenv from "dotenv";
 import { AppDataSource } from "./data-source1.js";
@@ -14,6 +15,7 @@ const envFile =
 dotenv.config({ path: envFile });
 
 const app = new Hono();
+app.use(cors()); // 외부 접속 다 허용하기
 
 /** DB 연결 */
 AppDataSource.initialize()
