@@ -28,7 +28,7 @@ router.get("/get_memo_list", async (c) => {
   };
   try {
     const boardRepo = AppDataSource.getRepository(TBoard);
-    const memo = await boardRepo.find();
+    const memo = await boardRepo.find({ order: { createdDt: "DESC" } });
     result.data = memo;
     return c.json(result);
   } catch (error: any) {
