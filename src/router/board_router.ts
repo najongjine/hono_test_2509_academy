@@ -101,4 +101,29 @@ router.post("/upsert", async (c) => {
   }
 });
 
+router.post("/delete", async (c) => {
+  let result: { success: boolean; data: any; msg: string } = {
+    success: true,
+    data: null,
+    msg: ``,
+  };
+  try {
+    const body = await c?.req?.parseBody();
+    let id = Number(body["id"] ?? 0);
+
+    /* t_board 에 데이터 저장하기 */
+    const boardRepo = AppDataSource.getRepository(TBoard);
+    let newBoard =
+      (await boardRepo.findOne({ where: { id: id } })) ?? new TBoard();
+    if (newBoard?.id) {
+      boardRepo.remove(newBoard);
+    }
+    return c.json(result);
+  } catch (error: any) {
+    result.success = false;
+    result.msg = `server error. ${error?.message ?? ""}`;
+    return c.json(result);
+  }
+});
+
 export default router;
