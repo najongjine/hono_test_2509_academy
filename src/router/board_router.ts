@@ -20,7 +20,7 @@ router.get("/", async (c) => {
   }
 });
 
-router.get("/get_memo_list", async (c) => {
+router.get("/get_memo", async (c) => {
   let result: { success: boolean; data: any; msg: string } = {
     success: true,
     data: null,
