@@ -20,16 +20,15 @@ router.get("/", async (c) => {
   }
 });
 
-router.get("/get_memo", async (c) => {
+router.get("/get_memo_list", async (c) => {
   let result: { success: boolean; data: any; msg: string } = {
     success: true,
     data: null,
     msg: ``,
   };
   try {
-    let id = Number(c?.req?.query("id") ?? 0);
     const boardRepo = AppDataSource.getRepository(TBoard);
-    const memo = await boardRepo.findOne({ where: { id: id } });
+    const memo = await boardRepo.find();
     result.data = memo;
     return c.json(result);
   } catch (error: any) {
@@ -46,8 +45,9 @@ router.get("/get_memo", async (c) => {
     msg: ``,
   };
   try {
+    let id = Number(c?.req?.query("id") ?? 0);
     const boardRepo = AppDataSource.getRepository(TBoard);
-    const memo = await boardRepo.find();
+    const memo = await boardRepo.findOne({ where: { id: id } });
     result.data = memo;
     return c.json(result);
   } catch (error: any) {
